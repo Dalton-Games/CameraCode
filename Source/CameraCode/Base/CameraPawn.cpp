@@ -47,3 +47,35 @@ void ACameraPawn::SetCameraDistance(float distance)
     CameraArm->SetRelativeRotation(rot, true);
 }
 
+void ACameraPawn::SetYaw(float yaw)
+{
+    this->Yaw = yaw;
+
+    FRotator rot(this->Pitch, this->Yaw, this->Roll);
+    CameraArm->SetRelativeRotation(rot, true);
+}
+
+void ACameraPawn::SetRoll(float roll)
+{
+    this->Roll = roll;
+
+    FRotator rot(this->Pitch, this->Yaw, this->Roll);
+    CameraArm->SetRelativeRotation(rot, true);
+}
+
+
+void ACameraPawn::SetOrientation(float yaw, float roll)
+{
+    this->Yaw = yaw;
+    this->Roll = roll;
+
+    FRotator rot(this->Pitch, this->Yaw, this->Roll);
+    CameraArm->SetRelativeRotation(rot, true);
+}
+
+void ACameraPawn::SetOrientationDistance(float distance, float yaw, float roll) {
+    this->Yaw = yaw;
+    this->Roll = roll;
+    this->SetCameraDistance(distance);
+}
+

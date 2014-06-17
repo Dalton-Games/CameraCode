@@ -52,20 +52,42 @@ class ACameraPawn : public APawn
     float Pitch;
 
     /** Yaw Angle at were the camera is located respect focus point*/
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Position")
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Camera Position")
     float Yaw;
 
     /** Roll Angle at were the camera is located respect focus point*/
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Position")
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Camera Position")
     float Roll;
 
     /**
      * Sets the camera distance between max and min distance
      * @param distance Normalized distance, were 1.0 is the max distance and 0.0 is the minimal distance 
      */
-    UFUNCTION(BlueprintCallable, Category = "Camera Position")
+    UFUNCTION(BlueprintCallable, Category = "Camera Control")
     void SetCameraDistance(float distance);
 
+    /**
+     * Sets Camera Yaw angle
+     */
+    UFUNCTION(BlueprintCallable, Category = "Camera Control")
+    void SetYaw (float degress);
+    
+    /**
+     * Sets Camera Roll angle
+     */
+    UFUNCTION(BlueprintCallable, Category = "Camera Control")
+    void SetRoll (float degress);
 
-
+    /**
+     * Sets Camera Yaw and Roll angles
+     */
+    UFUNCTION(BlueprintCallable, Category = "Camera Control")
+    void SetOrientation (float rYaw, float rRoll);
+    
+    /**
+     * Sets Camera Yaw and Roll angles plus sets the camera distance between max and min distance
+     * @param distance Normalized distance, were 1.0 is the max distance and 0.0 is the minimal distance 
+     */
+    UFUNCTION(BlueprintCallable, Category = "Camera Control")
+    void SetOrientationDistance (float distance, float rYaw, float rRoll);
 };
