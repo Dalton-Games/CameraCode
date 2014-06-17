@@ -28,18 +28,18 @@ ACameraPawn::ACameraPawn(const class FPostConstructInitializeProperties& PCIP)
     this->Yaw = 0;
     this->Roll = 0;
 
-    this->SetCameraDistance(1.0);
+    this->NormDistance = 1.0;
+    this->UpdateCameraDistance();
 
+    this->bMouseEvents = true;
 
 }
 
-void ACameraPawn::SetCameraDistance(float distance)
+void ACameraPawn::UpdateCameraDistance()
 {
-    assert(distance < 1.0 && distance >= 0);
-
     // Gets distance and pitch angle from max/min and the normalized value
-    this->FocusDistance = FMath::Lerp(this->MinDistance, this->MaxDistance, distance);
-    this->Pitch = FMath::Lerp(this->MinPitch, this->MaxPitch, distance);
+    this->FocusDistance = FMath::Lerp(this->MinDistance, this->MaxDistance, this->NormDistance);
+    this->Pitch = FMath::Lerp(this->MinPitch, this->MaxPitch, this->NormDistance);
 
     CameraArm->TargetArmLength = this->FocusDistance;
 
@@ -73,9 +73,46 @@ void ACameraPawn::SetOrientation(float yaw, float roll)
     CameraArm->SetRelativeRotation(rot, true);
 }
 
-void ACameraPawn::SetOrientationDistance(float distance, float yaw, float roll) {
+void ACameraPawn::SetOrientationDistance(float distance, float yaw, float roll)
+{
     this->Yaw = yaw;
     this->Roll = roll;
-    this->SetCameraDistance(distance);
+    this->NormDistance = distance;
+
+    this->UpdateCameraDistance();
 }
 
+void ACameraPawn::MoveForward(float Val)
+{
+    FRotator rot(0, this->Yaw, 0);
+    FVector relDir(Val, 0, 0); // X axis is in/out to the screen
+    FVector dir = rot.RotateVector(relDir);
+
+    this->AddMovementInput(relDir, 1);
+}
+
+void ACameraPawn::MoveRight(float Val)
+{
+    FRotator rot(0, this->Yaw, 0);
+    FVector relDir(0, Val, 0); // Y axis is right/left to the screen
+    FVector dir = rot.RotateVector(relDir);
+
+    this->AddMovementInput(relDir, 1);
+}
+
+void ACameraPawn::Zoom(float Val)
+{
+    this->NormDistance += Val;
+    this->UpdateCameraDistance();
+}
+
+
+/*
+void ACameraPawn::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+{
+    // Control by axis of the camera (keys and gamepad)
+    InputComponent->BindAxis("MoveForward", this, &ACameraPawn::MoveForward);
+    InputComponent->BindAxis("MoveRight", this, &ACameraPawn::MoveRight);
+    InputComponent->BindAxis("Zoom", this, &ACameraPawn::Zoom);
+}
+*/
