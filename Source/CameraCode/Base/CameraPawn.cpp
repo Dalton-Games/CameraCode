@@ -15,6 +15,7 @@ ACameraPawn::ACameraPawn(const class FPostConstructInitializeProperties& PCIP)
     RootComponent = Sphere;
 
     // Create movement component
+    // We need a movement componeto to use AddMovementInput
     MovementComponent = PCIP.CreateDefaultSubobject<UFloatingPawnMovement>(this, TEXT("Movement"));
     MovementComponent->UpdatedComponent = Sphere;
     
@@ -22,7 +23,7 @@ ACameraPawn::ACameraPawn(const class FPostConstructInitializeProperties& PCIP)
     CameraArm->AttachParent = RootComponent;
 
     MainCamera = PCIP.CreateDefaultSubobject<UCameraComponent>(this, TEXT("Camera"));
-    MainCamera->bUseControllerViewRotation = false;
+    MainCamera->bUseControllerViewRotation = false; // We use Pawn rotation and camera relative rotation
     MainCamera->AttachParent = CameraArm;
 
     this->MaxDistance = 2000; // 20 meters
