@@ -13,6 +13,7 @@ class AIso3dPlayerController : public APlayerController
 {
 	GENERATED_UCLASS_BODY()
 
+    // Axis binding
     UFUNCTION()
     void MoveForward (float val);
     
@@ -21,6 +22,15 @@ class AIso3dPlayerController : public APlayerController
     
     UFUNCTION()
     void Zoom (float val);
+
+    // Action binding
+    UFUNCTION()
+    void ZoomIn ();
+    
+    UFUNCTION()
+    void ZoomOut ();
+
+
 	
 protected:
     /** Allows the PlayerController to set up custom input bindings. */

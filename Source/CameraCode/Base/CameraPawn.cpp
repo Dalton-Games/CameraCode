@@ -106,16 +106,13 @@ void ACameraPawn::MoveRight(float Val)
 void ACameraPawn::Zoom(float Val)
 {
     this->NormDistance += Val;
+    if (this->NormDistance > 1.0) {
+        this->NormDistance = 1.0;
+    }
+    else if (this->NormDistance < 0) {
+        this->NormDistance = 0;
+    }
+
     this->UpdateCameraDistance();
 }
 
-
-/*
-void ACameraPawn::SetupPlayerInputComponent(class UInputComponent* InputComponent)
-{
-    // Control by axis of the camera (keys and gamepad)
-    InputComponent->BindAxis("MoveForward", this, &ACameraPawn::MoveForward);
-    InputComponent->BindAxis("MoveRight", this, &ACameraPawn::MoveRight);
-    InputComponent->BindAxis("Zoom", this, &ACameraPawn::Zoom);
-}
-*/
