@@ -11,7 +11,7 @@ ACameraPawn::ACameraPawn(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
     Sphere = PCIP.CreateDefaultSubobject<USphereComponent>(this, TEXT("Sphere"));
-    Sphere->InitSphereRadius(5.0f);
+    Sphere->InitSphereRadius(10.0f);
     RootComponent = Sphere;
 
     // Create movement component
