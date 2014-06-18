@@ -3,6 +3,8 @@
 #pragma once
 
 #include "GameFramework/Pawn.h"
+#include "GameFramework/FloatingPawnMovement.h"
+
 #include "CameraPawn.generated.h"
 
 /**
@@ -14,7 +16,7 @@ class ACameraPawn : public APawn
 {
 	GENERATED_UCLASS_BODY()
 
-    /** point light component */
+    /** Base component */
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Base Components")
     TSubobjectPtr<USphereComponent> Sphere;
 
@@ -25,6 +27,10 @@ class ACameraPawn : public APawn
     /** Camera */
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
     TSubobjectPtr<UCameraComponent> MainCamera;
+
+	/** Movement component */
+	UPROPERTY(Category=Pawn, VisibleAnywhere, BlueprintReadOnly)
+	TSubobjectPtr<class UFloatingPawnMovement> MovementComponent;
 
 
     /** Camera Max distance from the focus point */
@@ -63,11 +69,6 @@ class ACameraPawn : public APawn
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Camera Position")
     float Roll;
     
-    /** Watchs mouse events */
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Events")
-    float bMouseEvents;
-    
-
     // FUNCTIONS ************************************************************************
 
     /**
@@ -119,4 +120,7 @@ class ACameraPawn : public APawn
     UFUNCTION(BlueprintCallable, Category = "Camera Control")
     void Zoom(float Val);
 
+
+    // OVERRIDES
+	virtual class UPawnMovementComponent* GetMovementComponent() const OVERRIDE { return MovementComponent; }
 };

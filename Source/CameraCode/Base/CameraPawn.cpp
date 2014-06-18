@@ -13,11 +13,16 @@ ACameraPawn::ACameraPawn(const class FPostConstructInitializeProperties& PCIP)
     Sphere = PCIP.CreateDefaultSubobject<USphereComponent>(this, TEXT("Sphere"));
     Sphere->InitSphereRadius(5.0f);
     RootComponent = Sphere;
+
+    // Create movement component
+    MovementComponent = PCIP.CreateDefaultSubobject<UFloatingPawnMovement>(this, TEXT("Movement"));
+    MovementComponent->UpdatedComponent = Sphere;
     
     CameraArm = PCIP.CreateDefaultSubobject<USpringArmComponent>(this, TEXT("SpringArm"));
     CameraArm->AttachParent = RootComponent;
 
     MainCamera = PCIP.CreateDefaultSubobject<UCameraComponent>(this, TEXT("Camera"));
+    MainCamera->bUseControllerViewRotation = false;
     MainCamera->AttachParent = CameraArm;
 
     this->MaxDistance = 2000; // 20 meters
@@ -30,8 +35,6 @@ ACameraPawn::ACameraPawn(const class FPostConstructInitializeProperties& PCIP)
 
     this->NormDistance = 1.0;
     this->UpdateCameraDistance();
-
-    this->bMouseEvents = true;
 
 }
 
