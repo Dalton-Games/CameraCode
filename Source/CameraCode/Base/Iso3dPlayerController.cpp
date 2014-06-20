@@ -55,10 +55,21 @@ void AIso3dPlayerController::Tick(float DeltaSeconds)
 
             float dx, dy;
             GetInputMouseDelta(dx, dy);
-            if (dx != 0 || dy != 0) { // If the mouse moved ...
+            if (bMouseMoved || abs(dx) > 0.1 || abs(dy) > 0.1) { // If the mouse moved ...
                 bMouseMoved = true;
 
-                // TODO ...
+                if (bCameraMovePressed) { // Button to move the camera has been pressed
+                    FHitResult OutHit;
+                    bool bHit;
+                    this->GetMouse3dTrace(OutHit, bHit, 20000, ECollisionChannel::ECC_Visibility);
+                    if (bHit) {
+                        // Move Camera enought to emplace OutHit.Location ~= Old3dMouse
+                        FVector NewPos = (Old3dMouse - OutHit.Location) + Camera->GetActorLocation();
+                        NewPos.Z = Camera->GetActorLocation().Z;
+                        Camera->SetActorLocation(NewPos, true);
+                    }
+                }
+
             }
         }
     }
@@ -165,14 +176,6 @@ void AIso3dPlayerController::CameraMoveReleased ()
                     Camera->SetActorLocation(newLoc, true);
                 }
 
-            }
-            else { // Move so we "drag" the view
-                
-                FHitResult OutHit;
-                bool bHit;
-                this->GetMouse3dTrace(OutHit, bHit, 20000, ECollisionChannel::ECC_Visibility);
-                // TODO Move Camera enought to emplace OutHit.Location ~= Old3dMouse
-            
             }
         }
     }
