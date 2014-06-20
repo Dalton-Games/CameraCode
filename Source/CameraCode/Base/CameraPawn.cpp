@@ -53,17 +53,17 @@ void ACameraPawn::UpdateCameraDistance()
     CameraArm->SetRelativeRotation(rot, true);
 }
 
-void ACameraPawn::SetYaw(float yaw)
+void ACameraPawn::AddYaw(float yaw)
 {
-    this->Yaw = yaw;
+    this->Yaw += yaw;
 
     FRotator rot(this->Pitch, this->Yaw, this->Roll);
     CameraArm->SetRelativeRotation(rot, true);
 }
 
-void ACameraPawn::SetRoll(float roll)
+void ACameraPawn::AddRoll(float roll)
 {
-    this->Roll = roll;
+    this->Roll += roll;
 
     FRotator rot(this->Pitch, this->Yaw, this->Roll);
     CameraArm->SetRelativeRotation(rot, true);
@@ -93,8 +93,7 @@ void ACameraPawn::MoveForward(float Val)
     FRotator rot(0, this->Yaw, 0);
     FVector relDir(Val, 0, 0); // X axis is in/out to the screen
     FVector dir = rot.RotateVector(relDir);
-
-    this->AddMovementInput(relDir, 1);
+    this->AddMovementInput(dir, 1);
 }
 
 void ACameraPawn::MoveRight(float Val)
@@ -102,8 +101,7 @@ void ACameraPawn::MoveRight(float Val)
     FRotator rot(0, this->Yaw, 0);
     FVector relDir(0, Val, 0); // Y axis is right/left to the screen
     FVector dir = rot.RotateVector(relDir);
-
-    this->AddMovementInput(relDir, 1);
+    this->AddMovementInput(dir, 1);
 }
 
 void ACameraPawn::Zoom(float Val)

@@ -81,13 +81,13 @@ class ACameraPawn : public APawn
      * Sets Camera Yaw angle
      */
     UFUNCTION(BlueprintCallable, Category = "Camera Control")
-    void SetYaw (float degress);
+    void AddYaw (float degress);
     
     /**
      * Sets Camera Roll angle
      */
     UFUNCTION(BlueprintCallable, Category = "Camera Control")
-    void SetRoll (float degress);
+    void AddRoll (float degress);
 
     /**
      * Sets Camera Yaw and Roll angles

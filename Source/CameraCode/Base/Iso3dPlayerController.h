@@ -27,6 +27,9 @@ class AIso3dPlayerController : public APlayerController
     UFUNCTION()
     void Zoom (float val);
 
+    UFUNCTION()
+    void RotateCCW(float val);
+
     // Action binding
     UFUNCTION()
     void ZoomIn ();

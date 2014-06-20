@@ -20,6 +20,7 @@ void AIso3dPlayerController::SetupInputComponent()
     InputComponent->BindAxis("MoveForward", this, &AIso3dPlayerController::MoveForward);
     InputComponent->BindAxis("MoveRight", this, &AIso3dPlayerController::MoveRight);
     InputComponent->BindAxis("Zoom", this, &AIso3dPlayerController::Zoom); // Not use this for mouse wheel, only for mapping gamepad control of zoom
+    InputComponent->BindAxis("CameraRotateCCW", this, &AIso3dPlayerController::RotateCCW);
 
     // Control by action of the camera (Mouse wheel, etc...)
     InputComponent->BindAction("ZoomIn", IE_Pressed, this, &AIso3dPlayerController::ZoomIn);
@@ -133,6 +134,16 @@ void AIso3dPlayerController::ZoomOut()
     }
 }
 
+void AIso3dPlayerController::RotateCCW(float val)
+{
+    if (bActive) {
+        auto Pawn = this->GetControlledPawn();
+        if (Pawn != nullptr && Pawn->IsA(ACameraPawn::StaticClass())) {
+            auto Camera = Cast<ACameraPawn>(Pawn);
+            Camera->AddYaw(val);
+        }
+    }
+}
 
 
 void AIso3dPlayerController::CameraMovePressed ()
