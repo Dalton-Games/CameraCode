@@ -35,10 +35,13 @@ void AIso3dPlayerController::BeginPlay()
 {
     Super::BeginPlay();
 
-    // Init internal state flags when we begin the game
+    // We enable mouse cursor and events with it on game actors.
     bActive = true;
     bShowMouseCursor = true;
+    bEnableClickEvents = true;
+    bEnableMouseOverEvents = true;
 
+    // Init internal state flags when we begin the game
     bCameraMovePressed = false;
     bMouseMoved = false;
 
