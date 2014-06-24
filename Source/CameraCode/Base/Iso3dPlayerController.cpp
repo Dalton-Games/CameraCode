@@ -40,6 +40,8 @@ void AIso3dPlayerController::BeginPlay()
     bShowMouseCursor = true;
     bEnableClickEvents = true;
     bEnableMouseOverEvents = true;
+    bEnableTouchEvents = true;
+    bEnableTouchOverEvents = true;
 
     // Init internal state flags when we begin the game
     bCameraMovePressed = false;

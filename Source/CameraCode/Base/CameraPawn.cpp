@@ -22,6 +22,7 @@ ACameraPawn::ACameraPawn(const class FPostConstructInitializeProperties& PCIP)
     CameraArm = PCIP.CreateDefaultSubobject<USpringArmComponent>(this, TEXT("SpringArm"));
     CameraArm->bEnableCameraLag = false;
     CameraArm->bEnableCameraRotationLag = false;
+    CameraArm->bDoCollisionTest = false;
     CameraArm->AttachParent = RootComponent;
 
     MainCamera = PCIP.CreateDefaultSubobject<UCameraComponent>(this, TEXT("Camera"));
